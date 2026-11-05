@@ -1,7 +1,4 @@
-"""Генерация синтетических данных для проекта «Простейший мессенджер на Flask».
-Запуск: python generate_data.py  ->  4 файла в data/
-Все данные синтетические, seed фиксирован, файлы воспроизводятся.
-"""
+"""Генерация синтетических данных для проекта"""
 import csv
 import math
 import random
@@ -18,7 +15,7 @@ def write(path, header, rows):
     print(f"{path}: {len(rows)} строк")
 
 
-# 1. Доля мобильного и десктопного трафика: 250 дней
+#Доля мобильного и десктопного трафика
 def traffic():
     rows = []
     day = datetime(2026, 1, 1)
@@ -40,7 +37,7 @@ def traffic():
            "tablet_sessions", "mobile_pct", "desktop_pct", "tablet_pct"], rows)
 
 
-# 2. Спам и хам: 300 сообщений, около 15 % спама
+#Спам и хам: 300 сообщений, около 15 % спама
 HAM = [
     "Привет, ты сегодня будешь на паре?", "Скинь, пожалуйста, конспект по ООП",
     "Во сколько встречаемся?", "Я уже вышел, буду через 10 минут",
@@ -105,7 +102,7 @@ def spam_ham():
            "word_count", "links_count", "digits_count", "exclamation_count", "uppercase_ratio"], rows)
 
 
-# 3. Отключение уведомлений в группах: 250 пользователей
+#Отключение уведомлений в группах
 def muting():
     rows = []
     for uid in range(1, 251):
@@ -125,21 +122,21 @@ def muting():
            "group_msgs_per_day", "muted_groups", "muted_share_pct", "muted_any", "muted_all"], rows)
 
 
-# 4. Нагрузка на сервер: 288 точек (один день, шаг 5 минут)
+#Нагрузка на сервер
 HOURLY = [0.08, 0.05, 0.04, 0.03, 0.03, 0.05, 0.12, 0.25, 0.40, 0.55, 0.65, 0.72,
           0.62, 0.66, 0.74, 0.70, 0.72, 0.85, 1.00, 0.97, 0.95, 0.85, 0.55, 0.28]
 
 
 def server_load():
     rows = []
-    start = datetime(2026, 11, 4, 0, 0)  # среда
+    start = datetime(2026, 11, 4, 0, 0) 
     for i in range(288):
         t = start + timedelta(minutes=5 * i)
         h = t.hour + t.minute / 60
         a, b = int(h) % 24, (int(h) + 1) % 24
         base = HOURLY[a] + (HOURLY[b] - HOURLY[a]) * (h - int(h))
         k = base * random.uniform(0.94, 1.06)
-        if random.random() < 0.02:          # редкие всплески
+        if random.random() < 0.02:     
             k *= random.uniform(1.2, 1.5)
         users = max(1, round(300 * k))
         rpm = round(users * 6 * random.uniform(0.9, 1.1))
