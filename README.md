@@ -26,4 +26,79 @@
 - [ ] Личные и групповые чаты - не реализовано
 - [ ] Личный профиль - не реализовано
 
+## Данные (1 задание)
+
+Для дальнейшего анализа были сгенерированы четыре набора данных. Они синтетические, создаются скриптом `generate_data.py` и воспроизводятся полностью, сид можно выбрать любой, главное в генераторе - он генерирует приблизительно реальные значения, это неаболютный рандом :) 
+
+| Файл | Строк | Содержание |
+|---|---|---|
+| `traffic_mobile_desktop.csv` | 250 | доля мобильного и десктопного трафика по дням |
+| `spam_ham_messages.csv` | 300 | сообщения с меткой спам или не спам |
+| `group_notifications_muting.csv` | 250 | пользователи, отключающие уведомления в группах |
+| `server_load.csv` | 288 | нагрузка на сервер в течение суток (шаг 5 минут) |
+
+### Колонки
+
+**traffic_mobile_desktop.csv**
+
+| Колонка | Описание |
+|---|---|
+| `date`, `weekday` | дата и день недели |
+| `total_sessions` | всего сессий за день |
+| `mobile_sessions`, `desktop_sessions`, `tablet_sessions` | сессии по типу устройства |
+| `mobile_pct`, `desktop_pct`, `tablet_pct` | доли устройств, % |
+
+**spam_ham_messages.csv**
+
+| Колонка | Описание |
+|---|---|
+| `id`, `sender_id` | номер сообщения и отправителя |
+| `chat_type` | `private` или `group` |
+| `timestamp`, `text` | время и текст сообщения |
+| `label` | `ham` (нормальное) или `spam` |
+| `text_length`, `word_count` | длина в символах и словах |
+| `links_count`, `digits_count`, `exclamation_count` | ссылки, цифры, восклицательные знаки |
+| `uppercase_ratio` | доля заглавных букв |
+
+**group_notifications_muting.csv**
+
+| Колонка | Описание |
+|---|---|
+| `user_id`, `age_group`, `platform` | пользователь, возрастная группа, устройство |
+| `registered_days` | дней с момента регистрации |
+| `groups_count`, `group_msgs_per_day` | число групп и сообщений в них за день |
+| `muted_groups`, `muted_share_pct` | заглушено групп и их доля, % |
+| `muted_any`, `muted_all` | заглушена хотя бы одна группа, заглушены все |
+
+**server_load.csv**
+
+| Колонка | Описание |
+|---|---|
+| `timestamp` | время замера |
+| `online_users` | пользователей онлайн |
+| `requests_per_min` | запросов в минуту |
+| `cpu_pct`, `ram_pct` | загрузка процессора и памяти, % |
+| `response_ms` | время ответа, мс |
+| `errors_5xx` | ошибок сервера за интервал |
+
+## Запуск генерации
+
+```
+python generate_data.py  
+```
+
+## Текущая структура репозитория
+
+```
+.
+├── gen/
+│   ├── data/
+│   │   ├── traffic_mobile_desktop.csv
+│   │   ├── spam_ham_messages.csv
+│   │   ├── group_notifications_muting.csv
+│   │   └── server_load.csv
+│   └── generate_data.py
+└── README.md
+```
+
 
